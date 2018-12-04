@@ -296,7 +296,7 @@ class ServerlessDynamodbLocal {
                     "WriteCapacityUnits": 10
                 };
                 if (migration.GlobalSecondaryIndexes) {
-                    for (indexDefinition of migration.GlobalSecondaryIndexes) {
+                    migration.GlobalSecondaryIndexes.forEach((indexDefinition) => {
                         indexDefinition.ProvisionedThroughput = {
                             "ReadCapacityUnits": 10,
                             "WriteCapacityUnits": 10
