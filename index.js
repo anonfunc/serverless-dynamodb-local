@@ -295,6 +295,14 @@ class ServerlessDynamodbLocal {
                     "ReadCapacityUnits": 10,
                     "WriteCapacityUnits": 10
                 };
+                if (migration.GlobalSecondaryIndexes) {
+                    for (indexDefinition of migration.GlobalSecondaryIndexes) {
+                        indexDefinition.ProvisionedThroughput = {
+                            "ReadCapacityUnits": 10,
+                            "WriteCapacityUnits": 10
+                        };
+                    }
+                }
             }
 
             if (migration.StreamSpecification && migration.StreamSpecification.StreamViewType) {
