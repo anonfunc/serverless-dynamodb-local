@@ -288,7 +288,7 @@ class ServerlessDynamodbLocal {
 
     createTable(dynamodb, migration) {
         return new BbPromise((resolve, reject) => {
-            if (migraton.BillingMode) {
+            if (migration.BillingMode) {
                 delete migration.BillingMode;
                 delete migration.ProvisionedThroughput;
                 migration.ProvisionedThroughput = {
