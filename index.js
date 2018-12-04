@@ -301,7 +301,7 @@ class ServerlessDynamodbLocal {
                             "ReadCapacityUnits": 10,
                             "WriteCapacityUnits": 10
                         };
-                    }
+                    });
                 }
             }
 
