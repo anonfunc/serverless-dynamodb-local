@@ -65,3 +65,56 @@ describe("Check Table operations", function() {
     });
   });
 });
+
+describe("Check On-Demand Table operations", function() {
+    describe("#update table", function(){
+        this.timeout(50000);
+        it("should update the table", function(done){
+            var params = {
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName": "batch",
+                        "AttributeType": "N"
+                    }
+                ],
+                "BillingMode": "PAY_PER_REQUEST",
+                "TableName": "Movies2"
+            }
+
+            db.updateTable(params,function(err,data){
+                if (err){
+                    should.not.exist(data);
+                } else {
+                    data.TableDescription.should.have.property("TableName","Movies2");
+                    should.exist(data);
+                }
+                done();
+            });
+        });
+    });
+    describe("queue-handler", function() {
+        this.timeout(50000);
+        it("should connect to dynamodb and list tables", function(done) {
+            db.listTables({}, function(err, data) {
+                if(err){
+                    should.exist(err);
+                } else {
+                    expect(data.TableNames).to.be.empty;
+                }
+                done();
+            });
+        });
+    });
+
+    describe("#getItems", function() {
+        this.timeout(50000);
+        var tableDes = db.getItem({"TableName": "Movies2"})
+        it("Retrieve hostname from created tables", function() {
+            assert.equal(tableDes.httpRequest.endpoint.hostname,"localhost");
+        });
+
+        it("Retrieves the path of the table",function(){
+            assert.equal(tableDes.httpRequest.path, "/");
+        });
+    });
+});
