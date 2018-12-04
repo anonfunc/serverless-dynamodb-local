@@ -288,6 +288,15 @@ class ServerlessDynamodbLocal {
 
     createTable(dynamodb, migration) {
         return new BbPromise((resolve, reject) => {
+            if (migraton.BillingMode) {
+                delete migration.BillingMode;
+                delete migration.ProvisionedThroughput;
+                migration.ProvisionedThroughput = {
+                    "ReadCapacityUnits": 10,
+                    "WriteCapacityUnits": 10
+                };
+            }
+
             if (migration.StreamSpecification && migration.StreamSpecification.StreamViewType) {
                 migration.StreamSpecification.StreamEnabled = true;
             }

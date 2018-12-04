@@ -16,16 +16,13 @@ describe("Port function",function(){
     assert(typeof service.port, "number");
   });
 
-  // it("Port value should be >= 0 and < 65536",function(done){
-  //   let service = new Plugin(serverlessMock, {});
-  //   this.timeout(10000)
-  //   setTimeout(function() {
-  //       http.get(`http://localhost:${service.port}/shell/`, function (response) {
-  //           assert.equal(response.statusCode, 200);
-  //           done();
-  //       });
-  //   }, 7000)
-  // });
+  it("Port value should be >= 0 and < 65536",function(done){
+    let service = new Plugin(serverlessMock, {});
+    http.get(`http://localhost:${service.port}/shell/`, function (response) {
+        assert.equal(response.statusCode, 200);
+        done();
+    });
+  });
 });
 
 describe("Check the dynamodb function",function(){
